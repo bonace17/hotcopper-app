@@ -23,7 +23,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "API_BASE_URL", "\"https://your-render-service.onrender.com/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://hotcopper-summary-api.onrender.com/\"")
     }
 
     signingConfigs {

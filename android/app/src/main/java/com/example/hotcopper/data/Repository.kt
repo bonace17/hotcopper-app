@@ -15,7 +15,11 @@ class Repository(
 
     suspend fun refreshFromNetwork(): Result<Map<String, StockSummary?>> {
         return runCatching {
-            val data = apiService.getDashboard().data
+            val data = runCatching { apiService.getDashboard().data }
+                .getOrElse {
+                    // Render free tier can cold-start slowly; retry once.
+                    apiService.getDashboard().data
+                }
             val entities = data.values.filterNotNull().map { it.toEntity() }
             if (entities.isNotEmpty()) {
                 dao.upsertAll(entities)
