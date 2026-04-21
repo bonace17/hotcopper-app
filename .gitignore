@@ -1,0 +1,9 @@
+backend/node_modules/
+backend/dist/
+backend/.env
+android/.gradle/
+android/local.properties
+android/**/build/
+android/keystore.properties
+android/**/*.jks
+android/**/*.keystore
