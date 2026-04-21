@@ -23,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.hotcopper.data.StockSummary
 
 @Composable
@@ -108,9 +110,35 @@ private fun TickerCard(ticker: String, summary: StockSummary?) {
                 return@Column
             }
             Text("Updated: ${summary.updated_at}", style = MaterialTheme.typography.bodySmall)
+            if (summary.ai_summary.isNotBlank()) {
+                Text("AI summary", style = MaterialTheme.typography.titleSmall)
+                Surface(
+                    shape = RoundedCornerShape(10.dp),
+                    tonalElevation = 1.dp
+                ) {
+                    Text(
+                        text = summary.ai_summary,
+                        modifier = Modifier.padding(10.dp),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
             Text("Key points", style = MaterialTheme.typography.titleSmall)
             summary.key_points.take(5).forEach { point ->
-                Text("• $point")
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(10.dp),
+                    tonalElevation = 1.dp
+                ) {
+                    Text(
+                        text = "• $point",
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+                        style = TextStyle(
+                            fontSize = 15.sp,
+                            lineHeight = 22.sp
+                        )
+                    )
+                }
             }
             if (summary.risks.isNotEmpty()) {
                 Text("Risks", style = MaterialTheme.typography.titleSmall)

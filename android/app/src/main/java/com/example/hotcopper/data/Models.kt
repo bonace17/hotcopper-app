@@ -11,6 +11,7 @@ data class DashboardResponse(
 @Serializable
 data class StockSummary(
     val ticker: String,
+    val ai_summary: String = "",
     val key_points: List<String>,
     val sentiment: String,
     val risks: List<String>,

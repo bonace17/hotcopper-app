@@ -11,6 +11,7 @@ export interface RawPost {
 
 export interface StockSummary {
   ticker: Ticker;
+  ai_summary: string;
   key_points: string[];
   sentiment: "bullish" | "neutral" | "bearish";
   risks: string[];

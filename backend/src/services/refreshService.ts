@@ -8,6 +8,7 @@ const TICKERS: Ticker[] = ["TGM", "FAU"];
 function unavailableSummary(ticker: Ticker): StockSummary {
   return {
     ticker,
+    ai_summary: "Source temporarily unavailable. Summary will refresh automatically when access is restored.",
     key_points: ["Live source temporarily unavailable. Showing fallback summary."],
     sentiment: "neutral",
     risks: ["Upstream website temporarily blocking server requests (HTTP 403)."],

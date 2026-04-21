@@ -8,6 +8,7 @@ import kotlinx.serialization.json.Json
 @Entity(tableName = "stock_summary")
 data class StockSummaryEntity(
     @PrimaryKey val ticker: String,
+    val aiSummary: String,
     val keyPointsJson: String,
     val sentiment: String,
     val risksJson: String,
@@ -20,6 +21,7 @@ private val json = Json
 fun StockSummary.toEntity(): StockSummaryEntity {
     return StockSummaryEntity(
         ticker = ticker,
+        aiSummary = ai_summary,
         keyPointsJson = json.encodeToString(key_points),
         sentiment = sentiment,
         risksJson = json.encodeToString(risks),
@@ -31,6 +33,7 @@ fun StockSummary.toEntity(): StockSummaryEntity {
 fun StockSummaryEntity.toModel(): StockSummary {
     return StockSummary(
         ticker = ticker,
+        ai_summary = aiSummary,
         key_points = json.decodeFromString(keyPointsJson),
         sentiment = sentiment,
         risks = json.decodeFromString(risksJson),

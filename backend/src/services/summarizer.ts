@@ -6,6 +6,7 @@ function fallbackSummary(ticker: Ticker, posts: RawPost[]): StockSummary {
   const keyPoints = posts.slice(0, 5).map((p) => p.title);
   return {
     ticker,
+    ai_summary: "Detailed AI summary is temporarily unavailable. Showing extracted highlights.",
     key_points: keyPoints.length ? keyPoints : ["No recent posts parsed."],
     sentiment: "neutral",
     risks: ["Automatic AI summary unavailable; using fallback extraction."],
@@ -19,7 +20,7 @@ export async function buildSummary(ticker: Ticker, posts: RawPost[]): Promise<St
     return fallbackSummary(ticker, posts);
   }
 
-  const prompt = `You are a financial discussion summarizer. Read the provided detailed HotCopper thread excerpts for ${ticker}. Extract the most important investor discussion points and summarize with context. Return strict JSON with keys: key_points(string[] 5 items), sentiment("bullish"|"neutral"|"bearish"), risks(string[]), catalysts(string[]). Posts: ${JSON.stringify(posts.slice(0, 10))}`;
+  const prompt = `You are a financial discussion summarizer. Read the provided detailed HotCopper thread excerpts for ${ticker}. Return strict JSON with keys: ai_summary(string concise paragraph), key_points(string[] 5 items), sentiment("bullish"|"neutral"|"bearish"), risks(string[]), catalysts(string[]). Posts: ${JSON.stringify(posts.slice(0, 10))}`;
 
   try {
     const response = await axios.post(
@@ -46,6 +47,7 @@ export async function buildSummary(ticker: Ticker, posts: RawPost[]): Promise<St
     const parsed = JSON.parse(text) as Omit<StockSummary, "ticker" | "updated_at">;
     return {
       ticker,
+      ai_summary: parsed.ai_summary || "No AI summary generated.",
       key_points: parsed.key_points?.slice(0, 5) || [],
       sentiment: parsed.sentiment || "neutral",
       risks: parsed.risks || [],
