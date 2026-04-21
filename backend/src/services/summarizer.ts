@@ -19,7 +19,7 @@ export async function buildSummary(ticker: Ticker, posts: RawPost[]): Promise<St
     return fallbackSummary(ticker, posts);
   }
 
-  const prompt = `You are a financial discussion summarizer. Summarize recent HotCopper posts for ${ticker}. Return strict JSON with keys: key_points(string[] 5 items), sentiment("bullish"|"neutral"|"bearish"), risks(string[]), catalysts(string[]). Posts: ${JSON.stringify(posts.slice(0, 10))}`;
+  const prompt = `You are a financial discussion summarizer. Read the provided detailed HotCopper thread excerpts for ${ticker}. Extract the most important investor discussion points and summarize with context. Return strict JSON with keys: key_points(string[] 5 items), sentiment("bullish"|"neutral"|"bearish"), risks(string[]), catalysts(string[]). Posts: ${JSON.stringify(posts.slice(0, 10))}`;
 
   try {
     const response = await axios.post(
